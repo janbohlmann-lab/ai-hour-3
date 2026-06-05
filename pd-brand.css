@@ -1,0 +1,192 @@
+/* =============================================================================
+   Pets Deli — Brand CSS
+   Single source of truth for PD-CI in all our HTML / PDF / web outputs.
+   Extracted from PD Brand Guidelines 2025 (pd-brand/source/).
+
+   Usage:
+     <link rel="stylesheet" href="pd-brand.css">
+     <body class="pd">  ... brand-awareness (blue) layout
+     <body class="pd pd--dog">  ... dog world
+     <body class="pd pd--cat">  ... cat world
+
+   Fonts: ALL self-hosted from pd-brand/fonts/ — no CDN dependency, reproducible
+   offline / in PDF engines. Roboto (digital body, Apache 2.0), Mindset Slim
+   (headlines, PD-licensed), Neue Haas Grotesk (print body, PD-licensed).
+   Provenance + licenses: pd-brand/fonts/README.md.
+============================================================================= */
+
+/* ---- Fonts: self-hosted, CDN-frei. @import muss vor @font-face stehen. ---- */
+@import url('fonts/roboto/roboto.css');   /* Roboto — Digital-Body (Apache 2.0) */
+
+/* Mindset Slim — Headlines (PintassilgoPrints, PD-lizenziert, intern).
+   OTF/TTF direkt, da das Web-Kit kein woff2 enthielt; Browser rendern OTF
+   via @font-face problemlos. (woff2-Konvertierung optional als Optimierung.) */
+@font-face {
+  font-family: 'Mindset Slim';
+  font-style: normal; font-weight: 400; font-display: swap;
+  src: url('fonts/mindset/MindsetSlim.otf') format('opentype'),
+       url('fonts/mindset/MindsetSlim.ttf') format('truetype');
+}
+
+/* Neue Haas Grotesk Display Pro — Print-Body (Monotype, PD-lizenziert, intern) */
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  font-style: normal; font-weight: 400; font-display: swap;
+  src: url('fonts/neue-haas/NeueHaasGrotesk-55Roman.woff2') format('woff2'),
+       url('fonts/neue-haas/NeueHaasGrotesk-55Roman.woff') format('woff');
+}
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  font-style: normal; font-weight: 700; font-display: swap;
+  src: url('fonts/neue-haas/NeueHaasGrotesk-75Bold.woff2') format('woff2'),
+       url('fonts/neue-haas/NeueHaasGrotesk-75Bold.woff') format('woff');
+}
+
+:root {
+  /* ---- Brand core ---- */
+  --pd-blue:        #19335A;   /* core, primary text — never dominated */
+  --pd-pink:        #E48091;   /* accent, ribbons, decorative */
+  --pd-light:       #A4BEE4;   /* generic light — body text on blue */
+  --pd-white:       #FFFFFF;
+  --pd-black:       #000000;   /* mono-only logo / B&W print */
+
+  --pd-text-primary:   #19335A;
+  --pd-text-secondary: #5B6B7F; /* APPROX — confirm hex with design system */
+
+  /* ---- Dog world ---- */
+  --pd-dog-main:      #44BBD3;  /* base / background */
+  --pd-dog-light:     #ADE6ED;
+  --pd-dog-dark:      #267E9E;
+  --pd-dog-highlight: #F1BFC8;  /* comms / decorative ribbon */
+
+  /* ---- Cat world ---- */
+  --pd-cat-main:      #C7ABDA;  /* base / background */
+  --pd-cat-light:     #EADAF0;
+  --pd-cat-dark:      #835FA3;
+  --pd-cat-highlight: #FBA666;  /* comms / decorative ribbon */
+
+  /* ---- Semantic roles (default = brand-awareness / blue world) ---- */
+  --pd-base:       var(--pd-blue);    /* page background */
+  --pd-on-base:    var(--pd-white);   /* text on base */
+  --pd-accent:     var(--pd-pink);    /* accents + ribbon */
+  --pd-surface:    var(--pd-white);   /* cards/sheets */
+  --pd-on-surface: var(--pd-blue);    /* text on surface */
+
+  /* ---- Type ---- */
+  --pd-font-headline:   'Mindset Slim', 'Fredoka', system-ui, sans-serif;
+  --pd-font-body:       'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --pd-font-body-print: 'Neue Haas Grotesk', 'Helvetica Neue', Arial, sans-serif;
+
+  /* ---- Logo clear space = 50% of icon height. Expose icon height as a var. */
+  --pd-logo-icon-h: 40px;
+  --pd-logo-clear:  calc(var(--pd-logo-icon-h) * 0.5);
+
+  --pd-radius: 14px;
+}
+
+/* ---- Pet-world overrides: swap the semantic base + accent ---- */
+.pd--dog {
+  --pd-base:   var(--pd-dog-main);
+  --pd-accent: var(--pd-dog-highlight);
+}
+.pd--cat {
+  --pd-base:   var(--pd-cat-main);
+  --pd-accent: var(--pd-cat-highlight);
+}
+
+/* =============================================================================
+   Base layout
+============================================================================= */
+.pd {
+  margin: 0;
+  background: var(--pd-base);
+  color: var(--pd-on-base);
+  font-family: var(--pd-font-body);
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* A white "sheet" surface (for documents/PDFs/cards) */
+.pd-sheet {
+  background: var(--pd-surface);
+  color: var(--pd-on-surface);
+  border-radius: var(--pd-radius);
+  padding: clamp(24px, 5vw, 56px);
+}
+
+/* =============================================================================
+   Headlines  — "words ARE the visuals"
+   Mindset Slim, right-aligned, tight leading, no full stops needed.
+============================================================================= */
+.pd-h, .pd h1, .pd h2 {
+  font-family: var(--pd-font-headline);
+  font-weight: 600;        /* Fredoka SemiBold ~ Mindset Slim weight */
+  text-transform: uppercase;
+  letter-spacing: 0;        /* tracking 0 per guideline */
+  line-height: 0.92;        /* close leading (~85% feel) */
+  text-align: right;        /* headline default */
+  margin: 0 0 0.4em;
+  color: var(--pd-on-base);
+}
+.pd-h--center { text-align: center; }
+.pd-h--left   { text-align: left; }
+
+/* Multi-line dynamism: rotate lines slightly (deck: 7.5deg / 3.5deg) */
+.pd-h .line-1 { display: inline-block; transform: rotate(-7.5deg); transform-origin: left center; }
+.pd-h .line-2 { display: inline-block; transform: rotate(-3.5deg); transform-origin: left center; }
+
+/* Decorative ribbon highlight — accent color of the active palette */
+.pd-ribbon {
+  display: inline-block;
+  background: var(--pd-accent);
+  color: var(--pd-white);
+  padding: 0.05em 0.5em;
+  transform: rotate(-3deg);
+  border-radius: 6px;
+}
+
+/* =============================================================================
+   Body copy — "words SERVE the visuals". Clean, easy to read, left-aligned.
+============================================================================= */
+.pd-body { font-family: var(--pd-font-body); font-weight: 400; text-align: left; }
+.pd-body strong, .pd-emph { font-weight: 900; }   /* Roboto Black for emphasis */
+.pd-muted { color: var(--pd-light); }             /* on blue */
+.pd-sheet .pd-muted { color: var(--pd-text-secondary); }  /* on white */
+
+/* Accent text / link */
+.pd-accent-text { color: var(--pd-accent); }
+.pd a { color: var(--pd-accent); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+
+/* =============================================================================
+   Logo lockup helper (text fallback — swap in real SVG from PD Drive)
+   Enforces the 50%-icon-height clear space.
+============================================================================= */
+.pd-logo { display: inline-flex; align-items: center; padding: var(--pd-logo-clear); }
+.pd-logo img, .pd-logo svg { height: var(--pd-logo-icon-h); width: auto; display: block; }
+
+/* =============================================================================
+   Buttons / pills
+============================================================================= */
+.pd-btn,
+.pd a.pd-btn {
+  font-family: var(--pd-font-body);
+  font-weight: 900;
+  background: var(--pd-accent);
+  color: var(--pd-white);
+  border: none;
+  border-radius: 999px;
+  padding: 0.7em 1.6em;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+.pd-btn--ghost { background: transparent; color: var(--pd-on-base); box-shadow: inset 0 0 0 2px currentColor; }
+
+/* =============================================================================
+   Print / PDF
+============================================================================= */
+@media print {
+  .pd { background: var(--pd-white); color: var(--pd-blue); }
+  .pd-sheet { border-radius: 0; padding: 0; }
+}

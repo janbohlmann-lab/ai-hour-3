@@ -1,0 +1,8 @@
+Roboto — Copyright Google LLC.
+Licensed under the Apache License, Version 2.0.
+http://www.apache.org/licenses/LICENSE-2.0
+
+Die in diesem Ordner liegenden woff2-Dateien (roboto-latin.woff2,
+roboto-latin-ext.woff2) wurden von Google Fonts / fonts.gstatic.com
+(Roboto v51, Variable Font) bezogen und duerfen unter den Bedingungen der
+Apache License 2.0 frei verwendet und weitergegeben werden.
